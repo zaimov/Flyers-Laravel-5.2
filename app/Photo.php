@@ -11,7 +11,7 @@ class Photo extends Model
 
     protected $fillable = ['path'];
 
-    //protected $baseDir = '/flyers/photos';
+    //protected $baseDir = '/fls/photos';
 
     public function flyer()
     {
@@ -24,9 +24,9 @@ class Photo extends Model
 
     	$name = time() . $file->getClientOriginalName();
 
-    	$photo->path = '/flyers/photos/' . $name;
+    	$photo->path = '/fls/photos/' . $name;
 
-    	$file->move('flyers/photos', $name);
+    	$file->move('fls/photos', $name);
 
     	return $photo;
     }
