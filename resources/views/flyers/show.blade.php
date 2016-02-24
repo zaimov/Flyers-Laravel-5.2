@@ -2,24 +2,31 @@
 
 @section('content')
 
-	
-	<div class="col-md-3">
-		<h1>{{ $flyer->street }}</h1>
-		<h2>{!! $flyer->price !!}</h2>
+	<div class="row">	
+		<div class="col-md-4">
+			<h1>{{ $flyer->street }}</h1>
+			<h2>{!! $flyer->price !!}</h2>
 
-		<hr>
+			<hr>
 
-		<div class="description">
-			{!! nl2br($flyer->description) !!}
+			<div class="description">
+				{!! nl2br($flyer->description) !!}
+			</div>
+		</div>
+
+		<div class="col-md-8 gallery">
+			@foreach ($flyer->photos->chunk(4) as $set)
+				<div class="row">
+					@foreach ($set as $photo)
+						<div class="col-md-3 gallery__image">
+							<img src="/{{ $photo->thumbnail_path }}" alt="">
+						</div>
+					@endforeach
+				</div>
+			@endforeach
 		</div>
 	</div>
 
-	<div class="col-md-9">
-		@foreach ($flyer->photos as $photo)
-			<img src="{{ $photo->path }}" alt="">
-		@endforeach
-	</div>
-	
 	<hr>
 
 	<h2>Add your photos</h2>
