@@ -12,7 +12,14 @@ class Photo extends Model
 
     protected $fillable = ['path', 'name', 'thumbnail_path'];
 
-    protected $file;
+    // public $file;
+
+    /*public static function boot() 
+    {
+        static::creating(function($photo) {
+            return $photo->upload();
+        });
+    }*/
 
     //protected $baseDir = '/fls/photos';
 
@@ -21,14 +28,54 @@ class Photo extends Model
         return $this->belongsTo('App\Flyer');
     }
 
-    public static function fromFile(ploadedFile $file)
+/*    public static function fromFile(UploadedFile $file)
     {
         $photo = new static;
 
         $photo->file = $file;
+
+        return $photo->fill([
+            'name' => $photo->fileName(),
+            'photo' => $photo->filePath(),
+            'thumbnail_path' => $photo->thumbnailPath()
+        ]);
+    }*/
+
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = $name;
+
+        $this->path = $this->baseDir() . '/' . $name;
+        $this->thumbnail_path = $this->baseDir() . '/tn-' . $name;
     }
 
-    public static function named($name)
+    /*public function fileName()
+    {
+        $name = sha1(
+            time() . $this->file->getClientOriginalName()
+        );
+
+        $extension = $this->file->getClientOriginalExtension();
+
+        return "{$name}.{$extension}";
+    }*/
+
+   /* public function filePath()
+    {
+        return 'fls/photos/' . $this->fileName();
+    }
+
+    public function thumbnailPath()
+    {
+        return $this->baseDir() . '/tn-' . $this->fileName();
+    }*/
+
+    public function baseDir()
+    {
+        return 'fls/photos';
+    }
+
+    /*public static function named($name)
     {
     	$photo = new static;
 
@@ -37,7 +84,7 @@ class Photo extends Model
     	//$name = time() . $file->getClientOriginalName();
     	//$photo->path = '/fls/photos/' . $name;
     }
-
+*/
  /*   protected function saveAs($name)
     {
         $this->name = sprintf("%s-%s", time(), $name);
@@ -47,14 +94,14 @@ class Photo extends Model
         return $this;
     }*/
 
-    public function move(UploadedFile $file)
+   /* public function upload()
     {
-    	$file->move('fls/photos', $this->name);
+    	//$this->$file->move('fls/photos', $this->file->name);
 
-        Image::make($this->path)
+        Image::make($this->filePath())
             ->fit(200)
-            ->save($this->thumbnail_path);
+            ->save($this->thumbnail_path());
 
             return $this;
-    }
+    }*/
 }

@@ -29,6 +29,7 @@ class Flyer extends Model
         return '$' . number_format($price);
     }
 
+    //Assigns the flyer id
     public function addPhoto(Photo $photo)
     {
         return $this->photos()->save($photo);
