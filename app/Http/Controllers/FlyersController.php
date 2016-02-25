@@ -33,6 +33,9 @@ class FlyersController extends Controller
 
     public function addPhoto($zip, $street, Request $request)
     {
+        $photo = Photo::fromForm($request->file('photo'));
+
+         Flyer::locatedAt($zip, $street)->addPhoto($photo);
         /*$this->validate($request, [
             'photo' => 'required|mimes: jpg, jpeg, png'
         ]);*/
@@ -44,16 +47,16 @@ class FlyersController extends Controller
         // $file->move('flyers/photos', $name);
 
        // $photo = Photo::fromForm($request->file('photo'));
-        $photo = $this->makePhoto($request->file('photo'));
+        /*$photo = $this->makePhoto($request->file('photo'));
 
-        Flyer::locatedAt($zip, $street)->addPhoto($photo);
+        Flyer::locatedAt($zip, $street)->addPhoto($photo);*/
 
        // $flyer->photos()->create(['path' => "/flyers/photos/{$name}"]);
     }
 
-    public function makePhoto(UploadedFile $file)
+ /*   public function makePhoto(UploadedFile $file)
     {
         //return Photo::fromForm($file)->store($file);
         return Photo::named($file->getClientOriginalName())->move($file);
-    }
+    }*/
 }

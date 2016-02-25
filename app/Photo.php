@@ -12,11 +12,20 @@ class Photo extends Model
 
     protected $fillable = ['path', 'name', 'thumbnail_path'];
 
+    protected $file;
+
     //protected $baseDir = '/fls/photos';
 
     public function flyer()
     {
         return $this->belongsTo('App\Flyer');
+    }
+
+    public static function fromFile(ploadedFile $file)
+    {
+        $photo = new static;
+
+        $photo->file = $file;
     }
 
     public static function named($name)
@@ -29,14 +38,14 @@ class Photo extends Model
     	//$photo->path = '/fls/photos/' . $name;
     }
 
-    protected function saveAs($name)
+ /*   protected function saveAs($name)
     {
         $this->name = sprintf("%s-%s", time(), $name);
         $this->path = sprintf("fls/photos/%s", $this->name);
         $this->thumbnail_path = sprintf("fls/photos/tn-%s", $this->name);
 
         return $this;
-    }
+    }*/
 
     public function move(UploadedFile $file)
     {
