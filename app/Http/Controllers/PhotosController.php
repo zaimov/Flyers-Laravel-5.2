@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Flyer;
+use App\Photo;
 use App\AddPhotoToFlyer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -33,5 +34,12 @@ class PhotosController extends Controller
         Flyer::locatedAt($zip, $street)->addPhoto($photo);*/
 
        // $flyer->photos()->create(['path' => "/flyers/photos/{$name}"]);
+    }
+
+    public function destroy($id)
+    {
+        $photo = Photo::findOrFail($id)->delete();
+
+        return back();
     }
 }
